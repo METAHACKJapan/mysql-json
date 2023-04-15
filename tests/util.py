@@ -36,6 +36,13 @@ class BTC(object):
     
     def get_cursor(self)-> pymysql.cursors.DictCursor:
         return self.dbcon.cursor(pymysql.cursors.DictCursor)
+    
+    def __del__(self)-> None:
+        if self.dbcon:
+            try:
+                self.dbcon.close()
+            except:
+                pass
 
 def execute_sql_file(path: str)-> str:
     dsn: Dict[str, Any] = json.load(open(BTC.dsn_path, "r", encoding = "utf8"))
