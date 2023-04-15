@@ -1,13 +1,13 @@
 -- [begin] JSON array slice into new JSON array.
-DROP FUNCTION IF EXISTS JSON_ARRAY_SLICE;
+DROP FUNCTION IF EXISTS ARRAY_SLICE;
 DELIMITER $$
-CREATE FUNCTION JSON_ARRAY_SLICE (
+CREATE FUNCTION ARRAY_SLICE (
   arr JSON,
   start_index INT,
   end_index INT,
   step INT
 ) RETURNS JSON
-  COMMENT '`JSON_ARRAY_SLICE` function returns sliced subset of the `arr`.'
+  COMMENT '`ARRAY_SLICE` function returns sliced subset of the `arr`.'
   LANGUAGE SQL
   DETERMINISTIC
   NO SQL
