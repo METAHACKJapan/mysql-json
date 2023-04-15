@@ -2,15 +2,15 @@
 
 このプロジェクトは、MySQL 8.ｘで不十分と思われる以下のようなJSON関連関数を追加するもの。
 
-- [STR_SPLIT_TO_JSON_ARRAY(source_chars TEXT, separator_chars TEXT)](/docs_en/str_split_to_json_array.md)
+- [STR_SPLIT_TO_JSON_ARRAY(source_chars TEXT, separator_chars TEXT)](/docs_ja/str_split_to_json_array.md)
   - 文字列（`source_chars`）を分割文字列（`separator_chars`）によって刻んだJSON配列に変換する
-- [ARRAY_JOIN(arr JSON, separator_chars TEXT)](/docs_en/array_join.md)
+- [ARRAY_JOIN(arr JSON, separator_chars TEXT)](/docs_ja/array_join.md)
   - JSON配列を指定文字列で連結した文字列に変換する
-- JSON_ARRAY_SLICE(arr JSON, start_index INT, end_index, INT, step INT)
+- [ARRAY_SLICE(arr JSON, start_index INT, end_index, INT, step INT)](/docs_ja/array_slice.md)
   - JSON配列から新たな部分配列を得る
-- [ARRAY_CONCAT(arr1 JSON, arr2 JSON)](/docs_en/array_concat.md)
+- [ARRAY_CONCAT(arr1 JSON, arr2 JSON)](/docs_ja/array_concat.md)
   - 2つのJSON配列を連結した新たなJSON配列を得る
-- [ARRAY_UNIQUE(arr JSON)](/docs_en/array_unique.md)
+- [ARRAY_UNIQUE(arr JSON)](/docs_ja/array_unique.md)
   - JSON配列の要素から重複を除去したソート済みの新たなJSON配列を得る
 
 ## インストール方法

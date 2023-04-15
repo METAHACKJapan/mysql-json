@@ -6,7 +6,7 @@ This project includes stored functions for MySQL 8.x below:
   - String may be splitted into JSON array by separator.
 - [ARRAY_JOIN(arr JSON, separator_chars TEXT)](/docs_en/array_join.md)
   - JSON array may be concatenated into string by separator.
-- JSON_ARRAY_SLICE(arr JSON, start_index INT, end_index, INT, step INT)
+- [ARRAY_SLICE(arr JSON, start_index INT, end_index, INT, step INT)](/docs_en/array_slice.md)
   - JSON array may be sliced into JSON array as subset.
 - [ARRAY_CONCAT(arr1 JSON, arr2 JSON)](/docs_en/array_concat.md)
   - Concatenate 2 arrays into the new array.
