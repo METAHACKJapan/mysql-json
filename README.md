@@ -17,7 +17,6 @@ Documents in other languages below:
 
 - [Japanese](README_ja.md)
 
-
 ## How to install
 
 Each functions must be installed in one schema. We think about 2 use cases.
