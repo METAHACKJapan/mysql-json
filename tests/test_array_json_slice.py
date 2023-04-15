@@ -1,13 +1,20 @@
+import os
 from json import dumps
-from typing import Any, Optional, Sequence
-from tests.util import BTC
-import pymysql
+from typing import Any, Optional, Sequence, Tuple
+from tests.util import BTC, execute_sql_file
 import pytest
 
-class TestArraySlice(BTC):
-    __con__: Optional[pymysql.Connection] = None
-    DSN_PATH: str = "dsn.json"
+DDL_PATHS: Tuple[str] = ("ddl", "array_slice.sql",)
 
+@pytest.fixture(scope = "module", autouse = True)
+def install()-> None:
+    """Install stored function into test target DB instance."""
+    args: str = execute_sql_file(os.path.join(*DDL_PATHS))
+    print(f"Executed below:\n{args}")
+    yield
+    pass
+
+class TestArraySlice(BTC):
     @pytest.mark.parametrize(("title", "arr", "start", "stop", "step", "expected"), (
         ("Array.slice(null) -> null", dumps(None), 0, 1, 1, None),
         ("", dumps([1, 2, 3, 4, 5, 6, 7, 8, 9,]), 0, 1, 1, '[1]'),
@@ -22,9 +29,7 @@ class TestArraySlice(BTC):
         ("", dumps([True, -1, 0.1, "HOGE", None,]), 4, 5, 1, '[null]'),
     ))
     def test_arr(self, title: str, arr: Sequence[Any], start: int, stop: int, step: int, expected: Sequence[Any])-> None:
-        if self.__con__ is None:
-            self.__con__ = pymysql.connect(**self.dsn)
-        cur = self.__con__.cursor(pymysql.cursors.DictCursor)
+        cur = self.get_cursor()
         stmt: str = cur.mogrify("SELECT ARRAY_SLICE(%(param)s, %(start)s, %(stop)s, %(step)s) AS `expected`;", {
             "param": arr,
             "start": start,
@@ -43,9 +48,7 @@ class TestArraySlice(BTC):
         ("", dumps([1, 2, 3, 4, 5, 6, 7, 8, 9,]), 0, -3, 1, None),
     ))
     def test_range(self, title: str, arr: Sequence[Any], start: int, stop: int, step: int, expected: Sequence[Any])-> None:
-        if self.__con__ is None:
-            self.__con__ = pymysql.connect(**self.dsn)
-        cur = self.__con__.cursor(pymysql.cursors.DictCursor)
+        cur = self.get_cursor()
         stmt: str = cur.mogrify("SELECT ARRAY_SLICE(%(param)s, %(start)s, %(stop)s, %(step)s) AS `expected`;", {
             "param": arr,
             "start": start,
