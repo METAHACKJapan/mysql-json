@@ -1,15 +1,15 @@
 # ARRAY_CONCAT(arr1, arr2)
 
-## Features
+## 機能
 
-This function returns JSON Array consists of all elements of `arr1` and `arr2`.
+`arr1`と`arr2`を連結したJSON配列を返却する。
 
-- arr1 : JSON Array
-- arr2 : JSON Array
+- arr1 : JSON配列
+- arr2 : JSON配列
 
-## Examples
+## 使用例
 
-### Regular use for simple elements
+### 単純な要素での一般的な利用
 
 ```SQL
 SELECT ARRAY_CONCAT('["foo1", 2, null]', '["foo2", false, -1.1]') AS `result`;
@@ -19,7 +19,7 @@ SELECT ARRAY_CONCAT('["foo1", 2, null]', '["foo2", false, -1.1]') AS `result`;
 |:--|
 | `'["foo1", 2, null, "foo2", false, -1.1]'` |
 
-### Regular use for complexed elements
+### 複雑な要素での一般的な利用
 
 ```SQL
 SELECT
@@ -43,7 +43,7 @@ SELECT
 |:--|
 | `'["foo1", [2, null], {"foo2":false}]'` |
 
-### Parameter 1 is `NULL`
+### 第1引数が不定の場合
 
 ```SQL
 SELECT ARRAY_CONCAT(NULL, '["foo2", false, -1.1]') AS `result`;
@@ -53,7 +53,7 @@ SELECT ARRAY_CONCAT(NULL, '["foo2", false, -1.1]') AS `result`;
 |:--|
 | `NULL` |
 
-### Parameter 2 is `NULL`
+### 第2引数が不定の場合
 
 ```SQL
 SELECT ARRAY_CONCAT('["foo1", 2, null]', NULL) AS `result`;
@@ -63,7 +63,7 @@ SELECT ARRAY_CONCAT('["foo1", 2, null]', NULL) AS `result`;
 |:--|
 | `NULL` |
 
-### All parameters are `NULL`
+### すべての引数が不定の場合
 
 ```SQL
 SELECT ARRAY_CONCAT(NULL, NULL) AS `result`;

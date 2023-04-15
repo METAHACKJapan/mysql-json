@@ -1,16 +1,16 @@
 # ARRAY_JOIN(arr, separator_chars)
 
-## Features
+## 機能
 
-This function returns TEXT each of array elements joined by the separator text.
+JSON配列を与えると、連結文字列によってその各要素が接続された文字列をTEXT型で返却する。
 
-- arr : JSON Array
-- separator_chars : TEXT or NULL
-  - If `NULL` is set, use default as `','`.
+- arr : JSON配列
+- separator_chars : TEXT型 もしくは 不定
+  - もし`NULL`が指定された場合は、既定として`','`が採用される
 
-## Examples
+## 使用例
 
-### Regular use for simple elements (omit second parameter)
+### 単純な要素での利用法（第2引数がNULL）
 
 ```SQL
 SELECT ARRAY_JOIN('["foo1", 2, null]', NULL) AS `result`;
@@ -20,7 +20,7 @@ SELECT ARRAY_JOIN('["foo1", 2, null]', NULL) AS `result`;
 |:--|
 | `'foo1,2,null'` |
 
-### Regular use for simple elements
+### 単純な要素での利用法
 
 ```SQL
 SELECT ARRAY_JOIN('["foo1", 2, null]', '|') AS `result`;
@@ -30,7 +30,7 @@ SELECT ARRAY_JOIN('["foo1", 2, null]', '|') AS `result`;
 |:--|
 | `'foo1|2|null'` |
 
-### Regular use for complexed elements (omit second parameter)
+### 複雑な要素での利用法
 
 This function doesn't parses elements recursively.
 

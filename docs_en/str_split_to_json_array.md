@@ -1,11 +1,10 @@
-# STR_SPLIT_TO_JSON_ARRAY
+# STR_SPLIT_TO_JSON_ARRAY(source_chars, separator_chars)
 
 ## Features
 
 This function returns JSON Array which elements are splitted by the separator.
 
 - source_chars : TEXT or NULL
-  - TEXT must be JSON Array or JSON Object.
   - If `NULL` is set, always returns `'null'`.
 - separator_chars : TEXT or NULL
   - If `NULL` is set, use default as `','`.

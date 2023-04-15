@@ -10,8 +10,13 @@ This project includes stored functions for MySQL 8.x below:
   - JSON array may be sliced into JSON array as subset.
 - [ARRAY_CONCAT(arr1 JSON, arr2 JSON)](/docs_en/array_concat.md)
   - Concatenate 2 arrays into the new array.
-- ARRAY_UNIQUE(arr JSON)
+- [ARRAY_UNIQUE(arr JSON)](/docs_en/array_unique.md)
   - Unique and Sort array into the new array.
+
+Documents in other languages below:
+
+- [Japanese](README_ja.md)
+
 
 ## How to install
 
@@ -24,7 +29,7 @@ This use case maybe applicable:
 - Your MySQL 8.x instance has many schemas.
 - Query for almost all schemas needs JSON utility functions incl. this package.
 
-Where schema to be installed these stored functions should be one schema.
+Where schema to be installed these stored functions should be the independent special schema.
 
 #### Installation on One Schema
 
@@ -49,3 +54,28 @@ SELECT
 
 ### 2. Install on your project schema
 
+This use case maybe applicable:
+
+- Your project that needs these functions relies on one schema.
+- Your projects use each schema but each project needs varies functions set or version.
+
+Probably this way is easy to manage, thus is suitable for the 1st step.
+
+#### Installation on the project Schema
+
+```SQL
+USE `target_schema`;
+SOURCE array_concat.sql;
+SOURCE array_join.sql;
+...
+```
+
+#### Usage example on the project Schema
+
+```SQL
+USE `target_schema`;
+SELECT
+    `json_util`.ARRAY_JOIN(...),
+    ...
+  FROM ...
+```
