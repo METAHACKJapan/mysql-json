@@ -1,0 +1,9 @@
+{
+    "host":"localhost",
+    "port":3306,
+    "user":"test_runner",
+    "password":"",
+    "database": "test_example",
+    "use_unicode": true,
+    "charset": "utf8mb4"
+}

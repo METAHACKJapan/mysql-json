@@ -1,0 +1,9 @@
+.venv/*
+.vscode/*
+**/*.pyc
+**/*.pyd
+
+dsn.json
+report.html
+style.css
+.*

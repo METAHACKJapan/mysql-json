@@ -22,7 +22,7 @@ CREATE FUNCTION ARRAY_UNIQUE (
             ORDER BY `val` ASC
         )
       SELECT
-          JSON_ARRAYAGG(`val`)
+          COALESCE(JSON_ARRAYAGG(`val`), '[]')
         INTO ret
         FROM `CTE_SRC`
       ;
