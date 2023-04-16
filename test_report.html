@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title>test_report.html</title>
+    <link href="assets/style.css" rel="stylesheet" type="text/css"/></head>
+  <body onLoad="init()">
+    <script>/* This Source Code Form is subject to the terms of the Mozilla Public
+ * License, v. 2.0. If a copy of the MPL was not distributed with this file,
+ * You can obtain one at http://mozilla.org/MPL/2.0/. */
+
+
+function toArray(iter) {
+    if (iter === null) {
+        return null;
+    }
+    return Array.prototype.slice.call(iter);
+}
+
+function find(selector, elem) { // eslint-disable-line no-redeclare
+    if (!elem) {
+        elem = document;
+    }
+    return elem.querySelector(selector);
+}
+
+function findAll(selector, elem) {
+    if (!elem) {
+        elem = document;
+    }
+    return toArray(elem.querySelectorAll(selector));
+}
+
+function sortColumn(elem) {
+    toggleSortStates(elem);
+    const colIndex = toArray(elem.parentNode.childNodes).indexOf(elem);
+    let key;
+    if (elem.classList.contains('result')) {
+        key = keyResult;
+    } else if (elem.classList.contains('links')) {
+        key = keyLink;
+    } else {
+        key = keyAlpha;
+    }
+    sortTable(elem, key(colIndex));
+}
+
+function showAllExtras() { // eslint-disable-line no-unused-vars
+    findAll('.col-result').forEach(showExtras);
+}
+
+function hideAllExtras() { // eslint-disable-line no-unused-vars
+    findAll('.col-result').forEach(hideExtras);
+}
+
+function showExtras(colresultElem) {
+    const extras = colresultElem.parentNode.nextElementSibling;
+    const expandcollapse = colresultElem.firstElementChild;
+    extras.classList.remove('collapsed');
+    expandcollapse.classList.remove('expander');
+    expandcollapse.classList.add('collapser');
+}
+
+function hideExtras(colresultElem) {
+    const extras = colresultElem.parentNode.nextElementSibling;
+    const expandcollapse = colresultElem.firstElementChild;
+    extras.classList.add('collapsed');
+    expandcollapse.classList.remove('collapser');
+    expandcollapse.classList.add('expander');
+}
+
+function showFilters() {
+    let visibleString = getQueryParameter('visible') || 'all';
+    visibleString = visibleString.toLowerCase();
+    const checkedItems = visibleString.split(',');
+
+    const filterItems = document.getElementsByClassName('filter');
+    for (let i = 0; i < filterItems.length; i++) {
+        filterItems[i].hidden = false;
+
+        if (visibleString != 'all') {
+            filterItems[i].checked = checkedItems.includes(filterItems[i].getAttribute('data-test-result'));
+            filterTable(filterItems[i]);
+        }
+    }
+}
+
+function addCollapse() {
+    // Add links for show/hide all
+    const resulttable = find('table#results-table');
+    const showhideall = document.createElement('p');
+    showhideall.innerHTML = '<a href="javascript:showAllExtras()">Show all details</a> / ' +
+                            '<a href="javascript:hideAllExtras()">Hide all details</a>';
+    resulttable.parentElement.insertBefore(showhideall, resulttable);
+
+    // Add show/hide link to each result
+    findAll('.col-result').forEach(function(elem) {
+        const collapsed = getQueryParameter('collapsed') || 'Passed';
+        const extras = elem.parentNode.nextElementSibling;
+        const expandcollapse = document.createElement('span');
+        if (extras.classList.contains('collapsed')) {
+            expandcollapse.classList.add('expander');
+        } else if (collapsed.includes(elem.innerHTML)) {
+            extras.classList.add('collapsed');
+            expandcollapse.classList.add('expander');
+        } else {
+            expandcollapse.classList.add('collapser');
+        }
+        elem.appendChild(expandcollapse);
+
+        elem.addEventListener('click', function(event) {
+            if (event.currentTarget.parentNode.nextElementSibling.classList.contains('collapsed')) {
+                showExtras(event.currentTarget);
+            } else {
+                hideExtras(event.currentTarget);
+            }
+        });
+    });
+}
+
+function getQueryParameter(name) {
+    const match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+    return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+}
+
+function init () { // eslint-disable-line no-unused-vars
+    resetSortHeaders();
+
+    addCollapse();
+
+    showFilters();
+
+    sortColumn(find('.initial-sort'));
+
+    findAll('.sortable').forEach(function(elem) {
+        elem.addEventListener('click',
+            function() {
+                sortColumn(elem);
+            }, false);
+    });
+}
+
+function sortTable(clicked, keyFunc) {
+    const rows = findAll('.results-table-row');
+    const reversed = !clicked.classList.contains('asc');
+    const sortedRows = sort(rows, keyFunc, reversed);
+    /* Whole table is removed here because browsers acts much slower
+     * when appending existing elements.
+     */
+    const thead = document.getElementById('results-table-head');
+    document.getElementById('results-table').remove();
+    const parent = document.createElement('table');
+    parent.id = 'results-table';
+    parent.appendChild(thead);
+    sortedRows.forEach(function(elem) {
+        parent.appendChild(elem);
+    });
+    document.getElementsByTagName('BODY')[0].appendChild(parent);
+}
+
+function sort(items, keyFunc, reversed) {
+    const sortArray = items.map(function(item, i) {
+        return [keyFunc(item), i];
+    });
+
+    sortArray.sort(function(a, b) {
+        const keyA = a[0];
+        const keyB = b[0];
+
+        if (keyA == keyB) return 0;
+
+        if (reversed) {
+            return keyA < keyB ? 1 : -1;
+        } else {
+            return keyA > keyB ? 1 : -1;
+        }
+    });
+
+    return sortArray.map(function(item) {
+        const index = item[1];
+        return items[index];
+    });
+}
+
+function keyAlpha(colIndex) {
+    return function(elem) {
+        return elem.childNodes[1].childNodes[colIndex].firstChild.data.toLowerCase();
+    };
+}
+
+function keyLink(colIndex) {
+    return function(elem) {
+        const dataCell = elem.childNodes[1].childNodes[colIndex].firstChild;
+        return dataCell == null ? '' : dataCell.innerText.toLowerCase();
+    };
+}
+
+function keyResult(colIndex) {
+    return function(elem) {
+        const strings = ['Error', 'Failed', 'Rerun', 'XFailed', 'XPassed',
+            'Skipped', 'Passed'];
+        return strings.indexOf(elem.childNodes[1].childNodes[colIndex].firstChild.data);
+    };
+}
+
+function resetSortHeaders() {
+    findAll('.sort-icon').forEach(function(elem) {
+        elem.parentNode.removeChild(elem);
+    });
+    findAll('.sortable').forEach(function(elem) {
+        const icon = document.createElement('div');
+        icon.className = 'sort-icon';
+        icon.textContent = 'vvv';
+        elem.insertBefore(icon, elem.firstChild);
+        elem.classList.remove('desc', 'active');
+        elem.classList.add('asc', 'inactive');
+    });
+}
+
+function toggleSortStates(elem) {
+    //if active, toggle between asc and desc
+    if (elem.classList.contains('active')) {
+        elem.classList.toggle('asc');
+        elem.classList.toggle('desc');
+    }
+
+    //if inactive, reset all other functions and add ascending active
+    if (elem.classList.contains('inactive')) {
+        resetSortHeaders();
+        elem.classList.remove('inactive');
+        elem.classList.add('active');
+    }
+}
+
+function isAllRowsHidden(value) {
+    return value.hidden == false;
+}
+
+function filterTable(elem) { // eslint-disable-line no-unused-vars
+    const outcomeAtt = 'data-test-result';
+    const outcome = elem.getAttribute(outcomeAtt);
+    const classOutcome = outcome + ' results-table-row';
+    const outcomeRows = document.getElementsByClassName(classOutcome);
+
+    for(let i = 0; i < outcomeRows.length; i++){
+        outcomeRows[i].hidden = !elem.checked;
+    }
+
+    const rows = findAll('.results-table-row').filter(isAllRowsHidden);
+    const allRowsHidden = rows.length == 0 ? true : false;
+    const notFoundMessage = document.getElementById('not-found-message');
+    notFoundMessage.hidden = !allRowsHidden;
+}
+</script>
+    <h1>test_report.html</h1>
+    <p>Report generated on 16-Apr-2023 at 21:25:24 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.2.0</p>
+    <h2>Environment</h2>
+    <table id="environment">
+      <tr>
+        <td>Packages</td>
+        <td>{"pluggy": "1.0.0", "pytest": "7.3.1"}</td></tr>
+      <tr>
+        <td>Platform</td>
+        <td>Windows-10-10.0.19045-SP0</td></tr>
+      <tr>
+        <td>Plugins</td>
+        <td>{"clarity": "1.0.1", "cov": "4.0.0", "html": "3.2.0", "md-report": "0.3.0", "metadata": "2.0.4"}</td></tr>
+      <tr>
+        <td>Python</td>
+        <td>3.10.3</td></tr></table>
+    <h2>Summary</h2>
+    <p>69 tests ran in 1.11 seconds. </p>
+    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">69 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
+    <h2>Results</h2>
+    <table id="results-table">
+      <thead id="results-table-head">
+        <tr>
+          <th class="sortable result initial-sort" col="result">Result</th>
+          <th class="sortable" col="name">Test</th>
+          <th class="sortable" col="duration">Duration</th>
+          <th class="sortable links" col="links">Links</th></tr>
+        <tr hidden="true" id="not-found-message">
+          <th colspan="4">No results found. Try to check the filters</th></tr></thead>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_null_boundary[Array.concat(null, null) -&gt; null-None-None-None]</td>
+          <td class="col-duration">0.05</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> -----------------------------Captured stdout setup------------------------------ <br/>Executed below:
+mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_concat.sql
+<br/> -----------------------------Captured stderr setup------------------------------ <br/>mysql: [Warning] Using a password on the command line interface can be insecure.
+<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_null_boundary[Array.concat([1, 2, 3], null)-[1, 2, 3]-None-None]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_null_boundary[Array.concat(null, [1, 2, 3])-None-[1, 2, 3]-None]</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_null_boundary[Array.concat(null, []) -&gt; null-None-[]-None]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_null_boundary[Array.concat([], null) -&gt; null-[]-None-None]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_null_boundary[Array.concat([], []) -&gt; []-[]-[]-[]]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_null_boundary[Array.concat([], {}) -&gt; null-[]-{}-None]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_null_boundary[Array.concat({}, []) -&gt; null-{}-[]-None]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_number_element[Array.concat([], [1, 2, 3]) -&gt; [1, 2, 3]-[]-[1, 2, 3]-[1, 2, 3]]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_number_element[Array.concat([1, 2, 3], []) -&gt; [1, 2, 3]-[]-[1, 2, 3]-[1, 2, 3]]</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_number_element[Array.concat([1, 2, 3], [4, 5, 6]) -&gt; [1, 2, 3, 4, 5, 6]-[1, 2, 3]-[4, 5, 6]-[1, 2, 3, 4, 5, 6]]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_number_element[Array.concat([4, 5, 6], [1, 2, 3]) -&gt; [4, 5, 6, 1, 2, 3]-[4, 5, 6]-[1, 2, 3]-[4, 5, 6, 1, 2, 3]]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_number_element[Array.concat([null, 1, 2], [3, 4, 5]) -&gt; [null, 1, 2, 3, 4, 5]-[null, 1, 2]-[3, 4, 5]-[null, 1, 2, 3, 4, 5]]</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_number_element[Array.concat([1, 2, 3], [4, 5, null]) -&gt; [1, 2, 3, 4, 5, null]-[1, 2, 3]-[4, 5, null]-[1, 2, 3, 4, 5, null]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_string_element[Array.concat([], [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]) -&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_string_element[Array.concat([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;], []) -&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_string_element[Array.concat([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;], [&quot;d&quot;, &quot;e&quot;, &quot;f&quot;]) -&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[&quot;d&quot;, &quot;e&quot;, &quot;f&quot;]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_string_element[Array.concat([&quot;d&quot;, &quot;e&quot;, &quot;f&quot;], [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]) -&gt; [&quot;d&quot;, &quot;e&quot;, &quot;f&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[&quot;d&quot;, &quot;e&quot;, &quot;f&quot;]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[&quot;d&quot;, &quot;e&quot;, &quot;f&quot;, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_string_element[Array.concat([null, &quot;a&quot;, &quot;b&quot;], [&quot;c&quot;, &quot;d&quot;, &quot;e&quot;]) -&gt; [null, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;]-[null, &quot;a&quot;, &quot;b&quot;]-[&quot;c&quot;, &quot;d&quot;, &quot;e&quot;]-[null, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_string_element[Array.concat([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;], [&quot;d&quot;, &quot;e&quot;, null]) -&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, null]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[&quot;d&quot;, &quot;e&quot;, null]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, null]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_complexed_element[Array.concat([1, &quot;a&quot;, true, false, null], [{&quot;a&quot;:1, &quot;b&quot;:&quot;a&quot;, &quot;c&quot;:true, &quot;d&quot;:false, &quot;e&quot;:null}]) -&gt; [1, &quot;a&quot;, true, false, null, {&quot;a&quot;:1, &quot;b&quot;:&quot;a&quot;, &quot;c&quot;:true, &quot;d&quot;:false, &quot;e&quot;:null}]-[1, &quot;a&quot;, true, false, null]-[{&quot;a&quot;: 1, &quot;b&quot;: &quot;a&quot;, &quot;c&quot;: true, &quot;d&quot;: false, &quot;e&quot;: null}]-[1, &quot;a&quot;, true, false, null, {&quot;a&quot;: 1, &quot;b&quot;: &quot;a&quot;, &quot;c&quot;: true, &quot;d&quot;: false, &quot;e&quot;: null}]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_complexed_element[Array.concat([{&quot;a&quot;:1, &quot;b&quot;:&quot;a&quot;, &quot;c&quot;:true, &quot;d&quot;:false, &quot;e&quot;:null}], [1, &quot;a&quot;, true, false, null]) -&gt; [{&quot;a&quot;:1, &quot;b&quot;:&quot;a&quot;, &quot;c&quot;:true, &quot;d&quot;:false, &quot;e&quot;:null}, 1, &quot;a&quot;, true, false, null]-[{&quot;a&quot;: 1, &quot;b&quot;: &quot;a&quot;, &quot;c&quot;: true, &quot;d&quot;: false, &quot;e&quot;: null}]-[1, &quot;a&quot;, true, false, null]-[{&quot;a&quot;: 1, &quot;b&quot;: &quot;a&quot;, &quot;c&quot;: true, &quot;d&quot;: false, &quot;e&quot;: null}, 1, &quot;a&quot;, true, false, null]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_illegal_json_input[Array.join(&quot;adfuhjklhag123470987,.a]&quot;, null) -&gt; ??-adfuhjklhag123470987,.a]-None-OperationalError]</td>
+          <td class="col-duration">0.04</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> -----------------------------Captured stdout setup------------------------------ <br/>Executed below:
+mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_join.sql
+<br/> -----------------------------Captured stderr setup------------------------------ <br/>mysql: [Warning] Using a password on the command line interface can be insecure.
+<br/> ------------------------------Captured stdout call------------------------------ <br/>(3140, &#x27;Invalid JSON text: &quot;Invalid value.&quot; at position 0 in value for column \&#x27;.arr\&#x27;.&#x27;)
+<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_null_boundary[Array.join(null, null) -&gt; null-null-None-None]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_null_boundary[Array.join([], null) -&gt; -[]-None-]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_null_boundary[Array.join(null, &quot;&quot;) -&gt; -null--None]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_null_boundary[Array.join([], &quot;&quot;) -&gt; -[]--]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], null) -&gt; &quot;a,b,c,d-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]-None-a,b,c,d]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], &quot;, &quot;) -&gt; &quot;a, b, c, d-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]-, -a, b, c, d]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], &quot;&quot;) -&gt; &quot;abcd-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]--abcd]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], &quot;Åú&quot;) -&gt; &quot;aÅúbÅúcÅúd-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]-Åú-aÅúbÅúcÅúd]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, null, &quot;c&quot;, &quot;d&quot;], null) -&gt; &quot;a,b,null,c,d-[&quot;a&quot;, &quot;b&quot;, null, &quot;c&quot;, &quot;d&quot;]-None-a,b,null,c,d]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, true, &quot;c&quot;, &quot;d&quot;], null) -&gt; &quot;a,b,true,c,d-[&quot;a&quot;, &quot;b&quot;, true, &quot;c&quot;, &quot;d&quot;]-None-a,b,true,c,d]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, false, &quot;c&quot;, &quot;d&quot;], null) -&gt; &quot;a,b,false,c,d-[&quot;a&quot;, &quot;b&quot;, false, &quot;c&quot;, &quot;d&quot;]-None-a,b,false,c,d]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_number[Array.join([1, 2, 3, 4], null) -&gt; &quot;1,2,3,4-[1, 2, 3, 4]-None-1,2,3,4]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_number[Array.join([1, 2, 3, 4], &quot;, &quot;) -&gt; &quot;1, 2, 3, 4-[1, 2, 3, 4]-, -1, 2, 3, 4]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_number[Array.join([1, 2, 3, 4], &quot;Åú&quot;) -&gt; &quot;1Åú2Åú3Åú4-[1, 2, 3, 4]-Åú-1Åú2Åú3Åú4]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_number[Array.join([1, 2, 3, 4], &quot;&quot;) -&gt; &quot;1234-[1, 2, 3, 4]--1234]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_number[Array.join([1, 2, 3, 4], true) -&gt; &quot;1121314-[1, 2, 3, 4]-True-1121314]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_number[Array.join([1, 2, 3, 4], false) -&gt; &quot;1020304-[1, 2, 3, 4]-False-1020304]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_number[Array.join([1, 2, null, 3, 4], null) -&gt; &quot;1,2,null,3,4-[1, 2, null, 3, 4]-None-1,2,null,3,4]</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_number[Array.join([1, 2, true, 3, 4], null) -&gt; &quot;1,2,true,3,4-[1, 2, true, 3, 4]-None-1,2,true,3,4]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_number[Array.join([1, 2, false, 3, 4], null) -&gt; &quot;1,2,false,3,4-[1, 2, false, 3, 4]-None-1,2,false,3,4]</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_number[Array.join([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], 0) -&gt; &quot;a0b0c0d-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]-0-a0b0c0d]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[Array.slice(null) -&gt; null-null-0-1-1-None]</td>
+          <td class="col-duration">0.04</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> -----------------------------Captured stdout setup------------------------------ <br/>Executed below:
+mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_slice.sql
+<br/> -----------------------------Captured stderr setup------------------------------ <br/>mysql: [Warning] Using a password on the command line interface can be insecure.
+<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[-[1, 2, 3, 4, 5, 6, 7, 8, 9]-0-1-1-[1]]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[-[&quot;1&quot;, &quot;2&quot;, &quot;3&quot;, &quot;4&quot;, &quot;5&quot;]-0-1-1-[&quot;1&quot;]]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[-[true, false, null, true, false, null]-0-1-1-[true]]</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[-[true, false, null, true, false, null]-1-2-1-[false]]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[-[true, false, null, true, false, null]-2-3-1-[null]]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[-[true, -1, 0.1, &quot;HOGE&quot;, null]-0-1-1-[true]]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[-[true, -1, 0.1, &quot;HOGE&quot;, null]-1-2-1-[-1]]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[-[true, -1, 0.1, &quot;HOGE&quot;, null]-2-3-1-[0.1]]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[-[true, -1, 0.1, &quot;HOGE&quot;, null]-3-4-1-[&quot;HOGE&quot;]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[-[true, -1, 0.1, &quot;HOGE&quot;, null]-4-5-1-[null]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_range[-[1, 2, 3, 4, 5, 6, 7, 8, 9]-0-3-1-[1, 2, 3]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_range[-[1, 2, 3, 4, 5, 6, 7, 8, 9]-1-3-1-[2, 3]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_range[-[1, 2, 3, 4, 5, 6, 7, 8, 9]-7-9-1-[8, 9]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_range[-[1, 2, 3, 4, 5, 6, 7, 8, 9]--1-3-1-None]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_range[-[1, 2, 3, 4, 5, 6, 7, 8, 9]-0--3-1-None]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_unique.py::TestArrayUnique::test_illegal_json_input[Array.unique(&quot;adfuhjklhag123470987,.a]&quot;) -&gt; ??-adfuhjklhag123470987,.a]-OperationalError]</td>
+          <td class="col-duration">0.04</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="log"> -----------------------------Captured stdout setup------------------------------ <br/>Executed below:
+mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_unique.sql
+<br/> -----------------------------Captured stderr setup------------------------------ <br/>mysql: [Warning] Using a password on the command line interface can be insecure.
+<br/> ------------------------------Captured stdout call------------------------------ <br/>(3140, &#x27;Invalid JSON text: &quot;Invalid value.&quot; at position 0 in value for column \&#x27;.arr\&#x27;.&#x27;)
+<br/></div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_unique.py::TestArrayUnique::test_null_boundary[Array.unique(null) -&gt; null-null-None]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_unique.py::TestArrayUnique::test_null_boundary[Array.unique([]) -&gt; []-[]-[]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_unique.py::TestArrayUnique::test_string[Array.unique([&quot;f&quot;, &quot;D&quot;, &quot;D&quot;, &quot;d&quot;, &quot;b&quot;, &quot;a&quot;, &quot;0&quot;]) -&gt; [&quot;0&quot;, &quot;a&quot;, &quot;b&quot;, &quot;d&quot;, &quot;D&quot;, &quot;f&quot;]-[&quot;f&quot;, &quot;D&quot;, &quot;D&quot;, &quot;d&quot;, &quot;b&quot;, &quot;a&quot;, &quot;0&quot;]-[&quot;0&quot;, &quot;D&quot;, &quot;a&quot;, &quot;b&quot;, &quot;d&quot;, &quot;f&quot;]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_unique.py::TestArrayUnique::test_string[Array.unique([&quot;f&quot;, &quot;D&quot;, &quot;D&quot;, &quot;d&quot;, &quot;b&quot;, &quot;a&quot;, &quot;D&quot;]) -&gt; [&quot;D&quot;, &quot;a&quot;, &quot;b&quot;, &quot;d&quot;, &quot;f&quot;]-[&quot;f&quot;, &quot;D&quot;, &quot;D&quot;, &quot;d&quot;, &quot;b&quot;, &quot;a&quot;, &quot;D&quot;]-[&quot;D&quot;, &quot;a&quot;, &quot;b&quot;, &quot;d&quot;, &quot;f&quot;]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_unique.py::TestArrayUnique::test_number[Array.unique([0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4]) -&gt; [0, 1, 2, 3, 4]-[0, 1, 2, 2, 3, 3, 3, 4, 4, 4, 4]-[0, 1, 2, 3, 4]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_unique.py::TestArrayUnique::test_number[Array.unique([3, 5, 2, 4, 0.1, 0.3, 5, 2]) -&gt; [0.1, 0.3, 2, 3, 4, 5]-[3, 5, 2, 4, 0.1, 0.3, 5, 2]-[0.1, 0.3, 2, 3, 4, 5]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_unique.py::TestArrayUnique::test_mixtured_types[Array.unique([0, true, false, null, false, 3, &quot;5&quot;, null, false, true]) -&gt; [null, 0, 3, &quot;5&quot;, false, true]-[0, true, false, null, false, 3, &quot;5&quot;, null, false, true]-[null, 0, 3, &quot;5&quot;, false, true]]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_connection.py::Test_MySQL_Connection::test_connection</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody></table></body></html>
