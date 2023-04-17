@@ -14,6 +14,8 @@ This project includes stored functions for MySQL 8.x below:
   - Unique and Sort array into the new array.
 - [ARRAY_FLATTEN(arr JSON)](/docs_en/array_flatten.md)
   - Flatten first child elements of each element on `arr` as JSON array, not recursively.
+- [ARRAY_SORT(arr JSON)](/docs_en/array_sort.md)
+  - Sort in ascending order by elements.
 
 Documents in other languages below:
 
