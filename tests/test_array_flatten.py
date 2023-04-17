@@ -35,6 +35,10 @@ class TestArrayFlatten(BTC):
     @pytest.mark.parametrize(("title", "arr", "expected"), (
         ("""Array.flatten(null) -> null""", dumps(None), None),
         ("""Array.flatten([]) -> []""", dumps([]), dumps([])),
+        ("""Array.flatten({"a": 1, "b": 2, "c": 3}) -> ??""",
+            dumps({"a": 1, "b": 2, "c": 3}), None),
+        ("""Array.flatten([{"a": 1, "b": 2, "c": 3}, [1, 2, 3]]) -> ??""",
+            dumps([{"a": 1, "b": 2, "c": 3}, [1, 2, 3]]), dumps([1, 2, 3])),
     ))
     def test_null_boundary(self, title: str, arr: Sequence[Any], expected: Sequence[Any])-> None:
         cur = self.get_cursor()
