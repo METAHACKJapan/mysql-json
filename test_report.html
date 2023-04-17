@@ -253,7 +253,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
 }
 </script>
     <h1>test_report.html</h1>
-    <p>Report generated on 17-Apr-2023 at 14:39:26 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.2.0</p>
+    <p>Report generated on 17-Apr-2023 at 14:49:11 by <a href="https://pypi.python.org/pypi/pytest-html">pytest-html</a> v3.2.0</p>
     <h2>Environment</h2>
     <table id="environment">
       <tr>
@@ -269,8 +269,8 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <td>Python</td>
         <td>3.10.3</td></tr></table>
     <h2>Summary</h2>
-    <p>83 tests ran in 1.55 seconds. </p>
-    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">83 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
+    <p>85 tests ran in 1.37 seconds. </p>
+    <p class="filter" hidden="true">(Un)check the boxes to filter the results.</p><input checked="true" class="filter" data-test-result="passed" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="passed">85 passed</span>, <input checked="true" class="filter" data-test-result="skipped" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="skipped">0 skipped</span>, <input checked="true" class="filter" data-test-result="failed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="failed">0 failed</span>, <input checked="true" class="filter" data-test-result="error" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="error">0 errors</span>, <input checked="true" class="filter" data-test-result="xfailed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xfailed">0 expected failures</span>, <input checked="true" class="filter" data-test-result="xpassed" disabled="true" hidden="true" name="filter_checkbox" onChange="filterTable(this)" type="checkbox"/><span class="xpassed">0 unexpected passes</span>
     <h2>Results</h2>
     <table id="results-table">
       <thead id="results-table-head">
@@ -285,7 +285,7 @@ function filterTable(elem) { // eslint-disable-line no-unused-vars
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_null_boundary[Array.concat(null, null) -&gt; null-None-None-None]</td>
-          <td class="col-duration">0.07</td>
+          <td class="col-duration">0.05</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -297,7 +297,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_concat.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_null_boundary[Array.concat([1, 2, 3], null)-[1, 2, 3]-None-None]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.02</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -315,7 +315,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_concat.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_null_boundary[Array.concat(null, []) -&gt; null-None-[]-None]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -333,15 +333,6 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_concat.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_null_boundary[Array.concat([], []) -&gt; []-[]-[]-[]]</td>
-          <td class="col-duration">0.00</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="empty log">No log output captured.</div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_null_boundary[Array.concat([], {}) -&gt; null-[]-{}-None]</td>
           <td class="col-duration">0.02</td>
           <td class="col-links"></td></tr>
         <tr>
@@ -350,8 +341,17 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_concat.sql
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_null_boundary[Array.concat([], {}) -&gt; null-[]-{}-None]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_null_boundary[Array.concat({}, []) -&gt; null-{}-[]-None]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -360,7 +360,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_concat.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_number_element[Array.concat([], [1, 2, 3]) -&gt; [1, 2, 3]-[]-[1, 2, 3]-[1, 2, 3]]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -396,33 +396,6 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_concat.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_number_element[Array.concat([null, 1, 2], [3, 4, 5]) -&gt; [null, 1, 2, 3, 4, 5]-[null, 1, 2]-[3, 4, 5]-[null, 1, 2, 3, 4, 5]]</td>
-          <td class="col-duration">0.01</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="empty log">No log output captured.</div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_number_element[Array.concat([1, 2, 3], [4, 5, null]) -&gt; [1, 2, 3, 4, 5, null]-[1, 2, 3]-[4, 5, null]-[1, 2, 3, 4, 5, null]]</td>
-          <td class="col-duration">0.01</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="empty log">No log output captured.</div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_string_element[Array.concat([], [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]) -&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]]</td>
-          <td class="col-duration">0.01</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="empty log">No log output captured.</div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_string_element[Array.concat([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;], []) -&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]]</td>
           <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
@@ -431,8 +404,35 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_concat.sql
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_string_element[Array.concat([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;], [&quot;d&quot;, &quot;e&quot;, &quot;f&quot;]) -&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[&quot;d&quot;, &quot;e&quot;, &quot;f&quot;]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]]</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_number_element[Array.concat([1, 2, 3], [4, 5, null]) -&gt; [1, 2, 3, 4, 5, null]-[1, 2, 3]-[4, 5, null]-[1, 2, 3, 4, 5, null]]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_string_element[Array.concat([], [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]) -&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]]</td>
+          <td class="col-duration">0.02</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_string_element[Array.concat([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;], []) -&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]]</td>
           <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_string_element[Array.concat([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;], [&quot;d&quot;, &quot;e&quot;, &quot;f&quot;]) -&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[&quot;d&quot;, &quot;e&quot;, &quot;f&quot;]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, &quot;f&quot;]]</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -450,24 +450,6 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_concat.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_string_element[Array.concat([null, &quot;a&quot;, &quot;b&quot;], [&quot;c&quot;, &quot;d&quot;, &quot;e&quot;]) -&gt; [null, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;]-[null, &quot;a&quot;, &quot;b&quot;]-[&quot;c&quot;, &quot;d&quot;, &quot;e&quot;]-[null, &quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;]]</td>
-          <td class="col-duration">0.00</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="empty log">No log output captured.</div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_string_element[Array.concat([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;], [&quot;d&quot;, &quot;e&quot;, null]) -&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, null]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[&quot;d&quot;, &quot;e&quot;, null]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, null]]</td>
-          <td class="col-duration">0.00</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="empty log">No log output captured.</div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_complexed_element[Array.concat([1, &quot;a&quot;, true, false, null], [{&quot;a&quot;:1, &quot;b&quot;:&quot;a&quot;, &quot;c&quot;:true, &quot;d&quot;:false, &quot;e&quot;:null}]) -&gt; [1, &quot;a&quot;, true, false, null, {&quot;a&quot;:1, &quot;b&quot;:&quot;a&quot;, &quot;c&quot;:true, &quot;d&quot;:false, &quot;e&quot;:null}]-[1, &quot;a&quot;, true, false, null]-[{&quot;a&quot;: 1, &quot;b&quot;: &quot;a&quot;, &quot;c&quot;: true, &quot;d&quot;: false, &quot;e&quot;: null}]-[1, &quot;a&quot;, true, false, null, {&quot;a&quot;: 1, &quot;b&quot;: &quot;a&quot;, &quot;c&quot;: true, &quot;d&quot;: false, &quot;e&quot;: null}]]</td>
           <td class="col-duration">0.02</td>
           <td class="col-links"></td></tr>
         <tr>
@@ -476,8 +458,26 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_concat.sql
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_complexed_element[Array.concat([{&quot;a&quot;:1, &quot;b&quot;:&quot;a&quot;, &quot;c&quot;:true, &quot;d&quot;:false, &quot;e&quot;:null}], [1, &quot;a&quot;, true, false, null]) -&gt; [{&quot;a&quot;:1, &quot;b&quot;:&quot;a&quot;, &quot;c&quot;:true, &quot;d&quot;:false, &quot;e&quot;:null}, 1, &quot;a&quot;, true, false, null]-[{&quot;a&quot;: 1, &quot;b&quot;: &quot;a&quot;, &quot;c&quot;: true, &quot;d&quot;: false, &quot;e&quot;: null}]-[1, &quot;a&quot;, true, false, null]-[{&quot;a&quot;: 1, &quot;b&quot;: &quot;a&quot;, &quot;c&quot;: true, &quot;d&quot;: false, &quot;e&quot;: null}, 1, &quot;a&quot;, true, false, null]]</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_simple_string_element[Array.concat([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;], [&quot;d&quot;, &quot;e&quot;, null]) -&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, null]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;]-[&quot;d&quot;, &quot;e&quot;, null]-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;, &quot;e&quot;, null]]</td>
           <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_complexed_element[Array.concat([1, &quot;a&quot;, true, false, null], [{&quot;a&quot;:1, &quot;b&quot;:&quot;a&quot;, &quot;c&quot;:true, &quot;d&quot;:false, &quot;e&quot;:null}]) -&gt; [1, &quot;a&quot;, true, false, null, {&quot;a&quot;:1, &quot;b&quot;:&quot;a&quot;, &quot;c&quot;:true, &quot;d&quot;:false, &quot;e&quot;:null}]-[1, &quot;a&quot;, true, false, null]-[{&quot;a&quot;: 1, &quot;b&quot;: &quot;a&quot;, &quot;c&quot;: true, &quot;d&quot;: false, &quot;e&quot;: null}]-[1, &quot;a&quot;, true, false, null, {&quot;a&quot;: 1, &quot;b&quot;: &quot;a&quot;, &quot;c&quot;: true, &quot;d&quot;: false, &quot;e&quot;: null}]]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_concat.py::TestArrayConcat::test_complexed_element[Array.concat([{&quot;a&quot;:1, &quot;b&quot;:&quot;a&quot;, &quot;c&quot;:true, &quot;d&quot;:false, &quot;e&quot;:null}], [1, &quot;a&quot;, true, false, null]) -&gt; [{&quot;a&quot;:1, &quot;b&quot;:&quot;a&quot;, &quot;c&quot;:true, &quot;d&quot;:false, &quot;e&quot;:null}, 1, &quot;a&quot;, true, false, null]-[{&quot;a&quot;: 1, &quot;b&quot;: &quot;a&quot;, &quot;c&quot;: true, &quot;d&quot;: false, &quot;e&quot;: null}]-[1, &quot;a&quot;, true, false, null]-[{&quot;a&quot;: 1, &quot;b&quot;: &quot;a&quot;, &quot;c&quot;: true, &quot;d&quot;: false, &quot;e&quot;: null}, 1, &quot;a&quot;, true, false, null]]</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -516,7 +516,16 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_flatten.sql
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_flatten.py::TestArrayFlatten::test_simple_element[Array.flatten([[], [1, 2, 3]]) -&gt; [1, 2, 3]-[[], [1, 2, 3]]-[1, 2, 3]]</td>
+          <td class="col-name">tests/test_array_flatten.py::TestArrayFlatten::test_null_boundary[Array.flatten({&quot;a&quot;: 1, &quot;b&quot;: 2, &quot;c&quot;: 3}) -&gt; ??-{&quot;a&quot;: 1, &quot;b&quot;: 2, &quot;c&quot;: 3}-None]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_flatten.py::TestArrayFlatten::test_null_boundary[Array.flatten([{&quot;a&quot;: 1, &quot;b&quot;: 2, &quot;c&quot;: 3}, [1, 2, 3]]) -&gt; ??-[{&quot;a&quot;: 1, &quot;b&quot;: 2, &quot;c&quot;: 3}, [1, 2, 3]]-[1, 2, 3]]</td>
           <td class="col-duration">0.02</td>
           <td class="col-links"></td></tr>
         <tr>
@@ -525,8 +534,17 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_flatten.sql
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_flatten.py::TestArrayFlatten::test_simple_element[Array.flatten([[1, 2, 3], []]) -&gt; [1, 2, 3]-[[1, 2, 3], []]-[1, 2, 3]]</td>
+          <td class="col-name">tests/test_array_flatten.py::TestArrayFlatten::test_simple_element[Array.flatten([[], [1, 2, 3]]) -&gt; [1, 2, 3]-[[], [1, 2, 3]]-[1, 2, 3]]</td>
           <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_flatten.py::TestArrayFlatten::test_simple_element[Array.flatten([[1, 2, 3], []]) -&gt; [1, 2, 3]-[[1, 2, 3], []]-[1, 2, 3]]</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -535,7 +553,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_flatten.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_flatten.py::TestArrayFlatten::test_simple_element[Array.flatten([[1, 2, 3], [4, 5, 6]]) -&gt; [1, 2, 3, 4, 5, 6]-[[1, 2, 3], [4, 5, 6]]-[1, 2, 3, 4, 5, 6]]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.02</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -544,7 +562,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_flatten.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_flatten.py::TestArrayFlatten::test_hierarchical_element[Array.flatten([[&quot;a&quot;, [1, 2, 3], &quot;b&quot;], [1, 2, 3]]) -&gt; [&quot;a&quot;, [1, 2, 3], &quot;b&quot;, 1, 2, 3]-[[&quot;a&quot;, [1, 2, 3], &quot;b&quot;], [1, 2, 3]]-[&quot;a&quot;, [1, 2, 3], &quot;b&quot;, 1, 2, 3]]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -553,7 +571,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_flatten.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_flatten.py::TestArrayFlatten::test_hierarchical_element[Array.flatten([[&quot;a&quot;, {&quot;a&quot;:1, &quot;b&quot;:2, &quot;c&quot;:3}, &quot;b&quot;], [1, 2, 3]]) -&gt; [&quot;a&quot;, {&quot;a&quot;:1, &quot;b&quot;:2, &quot;c&quot;:3}, &quot;b&quot;, 1, 2, 3]-[[&quot;a&quot;, {&quot;a&quot;: 1, &quot;b&quot;: 2, &quot;c&quot;: 3}, &quot;b&quot;], [1, 2, 3]]-[&quot;a&quot;, {&quot;a&quot;: 1, &quot;b&quot;: 2, &quot;c&quot;: 3}, &quot;b&quot;, 1, 2, 3]]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -562,7 +580,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_flatten.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_illegal_json_input[Array.join(&quot;adfuhjklhag123470987,.a]&quot;, null) -&gt; ??-adfuhjklhag123470987,.a]-None-OperationalError]</td>
-          <td class="col-duration">0.06</td>
+          <td class="col-duration">0.05</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -584,7 +602,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_join.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_null_boundary[Array.join([], null) -&gt; -[]-None-]</td>
-          <td class="col-duration">0.02</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -602,7 +620,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_join.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_null_boundary[Array.join([], &quot;&quot;) -&gt; -[]--]</td>
-          <td class="col-duration">0.02</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -611,7 +629,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_join.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], null) -&gt; &quot;a,b,c,d-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]-None-a,b,c,d]</td>
-          <td class="col-duration">0.00</td>
+          <td class="col-duration">0.02</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -620,15 +638,6 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_join.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], &quot;, &quot;) -&gt; &quot;a, b, c, d-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]-, -a, b, c, d]</td>
-          <td class="col-duration">0.02</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="empty log">No log output captured.</div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], &quot;&quot;) -&gt; &quot;abcd-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]--abcd]</td>
           <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
@@ -637,25 +646,16 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_join.sql
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], &quot;&quot;) -&gt; &quot;abcd-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]--abcd]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;], &quot;Åú&quot;) -&gt; &quot;aÅúbÅúcÅúd-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]-Åú-aÅúbÅúcÅúd]</td>
-          <td class="col-duration">0.00</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="empty log">No log output captured.</div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, null, &quot;c&quot;, &quot;d&quot;], null) -&gt; &quot;a,b,null,c,d-[&quot;a&quot;, &quot;b&quot;, null, &quot;c&quot;, &quot;d&quot;]-None-a,b,null,c,d]</td>
-          <td class="col-duration">0.00</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="empty log">No log output captured.</div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, true, &quot;c&quot;, &quot;d&quot;], null) -&gt; &quot;a,b,true,c,d-[&quot;a&quot;, &quot;b&quot;, true, &quot;c&quot;, &quot;d&quot;]-None-a,b,true,c,d]</td>
           <td class="col-duration">0.02</td>
           <td class="col-links"></td></tr>
         <tr>
@@ -664,8 +664,26 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_join.sql
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, false, &quot;c&quot;, &quot;d&quot;], null) -&gt; &quot;a,b,false,c,d-[&quot;a&quot;, &quot;b&quot;, false, &quot;c&quot;, &quot;d&quot;]-None-a,b,false,c,d]</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, null, &quot;c&quot;, &quot;d&quot;], null) -&gt; &quot;a,b,null,c,d-[&quot;a&quot;, &quot;b&quot;, null, &quot;c&quot;, &quot;d&quot;]-None-a,b,null,c,d]</td>
+          <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, true, &quot;c&quot;, &quot;d&quot;], null) -&gt; &quot;a,b,true,c,d-[&quot;a&quot;, &quot;b&quot;, true, &quot;c&quot;, &quot;d&quot;]-None-a,b,true,c,d]</td>
           <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_string[Array.join([&quot;a&quot;, &quot;b&quot;, false, &quot;c&quot;, &quot;d&quot;], null) -&gt; &quot;a,b,false,c,d-[&quot;a&quot;, &quot;b&quot;, false, &quot;c&quot;, &quot;d&quot;]-None-a,b,false,c,d]</td>
+          <td class="col-duration">0.02</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -701,7 +719,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_join.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_number[Array.join([1, 2, 3, 4], &quot;&quot;) -&gt; &quot;1234-[1, 2, 3, 4]--1234]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -710,7 +728,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_join.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_number[Array.join([1, 2, 3, 4], true) -&gt; &quot;1121314-[1, 2, 3, 4]-True-1121314]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -728,7 +746,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_join.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_number[Array.join([1, 2, null, 3, 4], null) -&gt; &quot;1,2,null,3,4-[1, 2, null, 3, 4]-None-1,2,null,3,4]</td>
-          <td class="col-duration">0.02</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -737,7 +755,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_join.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_number[Array.join([1, 2, true, 3, 4], null) -&gt; &quot;1,2,true,3,4-[1, 2, true, 3, 4]-None-1,2,true,3,4]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -746,7 +764,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_join.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_join.py::TestArrayJoin::test_number[Array.join([1, 2, false, 3, 4], null) -&gt; &quot;1,2,false,3,4-[1, 2, false, 3, 4]-None-1,2,false,3,4]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -764,7 +782,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_join.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[Array.slice(null) -&gt; null-null-0-1-1-None]</td>
-          <td class="col-duration">0.04</td>
+          <td class="col-duration">0.05</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -794,7 +812,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_slice.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[-[true, false, null, true, false, null]-0-1-1-[true]]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -803,7 +821,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_slice.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[-[true, false, null, true, false, null]-1-2-1-[false]]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -812,7 +830,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_slice.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[-[true, false, null, true, false, null]-2-3-1-[null]]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -830,7 +848,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_slice.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[-[true, -1, 0.1, &quot;HOGE&quot;, null]-1-2-1-[-1]]</td>
-          <td class="col-duration">0.00</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -839,7 +857,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_slice.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_arr[-[true, -1, 0.1, &quot;HOGE&quot;, null]-2-3-1-[0.1]]</td>
-          <td class="col-duration">0.00</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -866,7 +884,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_slice.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_range[-[1, 2, 3, 4, 5, 6, 7, 8, 9]-0-3-1-[1, 2, 3]]</td>
-          <td class="col-duration">0.01</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -875,24 +893,6 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_slice.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_range[-[1, 2, 3, 4, 5, 6, 7, 8, 9]-1-3-1-[2, 3]]</td>
-          <td class="col-duration">0.00</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="empty log">No log output captured.</div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_range[-[1, 2, 3, 4, 5, 6, 7, 8, 9]-7-9-1-[8, 9]]</td>
-          <td class="col-duration">0.00</td>
-          <td class="col-links"></td></tr>
-        <tr>
-          <td class="extra" colspan="4">
-            <div class="empty log">No log output captured.</div></td></tr></tbody>
-      <tbody class="passed results-table-row">
-        <tr>
-          <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_range[-[1, 2, 3, 4, 5, 6, 7, 8, 9]--1-3-1-None]</td>
           <td class="col-duration">0.02</td>
           <td class="col-links"></td></tr>
         <tr>
@@ -901,8 +901,26 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_slice.sql
       <tbody class="passed results-table-row">
         <tr>
           <td class="col-result">Passed</td>
-          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_range[-[1, 2, 3, 4, 5, 6, 7, 8, 9]-0--3-1-None]</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_range[-[1, 2, 3, 4, 5, 6, 7, 8, 9]-7-9-1-[8, 9]]</td>
           <td class="col-duration">0.01</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_range[-[1, 2, 3, 4, 5, 6, 7, 8, 9]--1-3-1-None]</td>
+          <td class="col-duration">0.00</td>
+          <td class="col-links"></td></tr>
+        <tr>
+          <td class="extra" colspan="4">
+            <div class="empty log">No log output captured.</div></td></tr></tbody>
+      <tbody class="passed results-table-row">
+        <tr>
+          <td class="col-result">Passed</td>
+          <td class="col-name">tests/test_array_slice.py::TestArraySlice::test_range[-[1, 2, 3, 4, 5, 6, 7, 8, 9]-0--3-1-None]</td>
+          <td class="col-duration">0.02</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -969,7 +987,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_unique.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_array_unique.py::TestArrayUnique::test_number[Array.unique([3, 5, 2, 4, 0.1, 0.3, 5, 2]) -&gt; [0.1, 0.3, 2, 3, 4, 5]-[3, 5, 2, 4, 0.1, 0.3, 5, 2]-[0.1, 0.3, 2, 3, 4, 5]]</td>
-          <td class="col-duration">0.02</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -987,7 +1005,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_unique.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_connection.py::Test_MySQL_Connection::test_connection</td>
-          <td class="col-duration">0.00</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -996,7 +1014,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\array_unique.sql
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_str_split_to_json_array.py::TestStrSplitToJsonArray::test_simple[String.split(null, null) -&gt; null-None-None-null]</td>
-          <td class="col-duration">0.04</td>
+          <td class="col-duration">0.06</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -1008,7 +1026,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\str_split_to_json_a
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_str_split_to_json_array.py::TestStrSplitToJsonArray::test_simple[String.split([], null) -&gt; []-[]-None-[&quot;[]&quot;]]</td>
-          <td class="col-duration">0.02</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -1026,7 +1044,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\str_split_to_json_a
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_str_split_to_json_array.py::TestStrSplitToJsonArray::test_simple[String.split(&quot;a|b|c|d&quot;, null) -&gt; [&quot;a|b|c|d&quot;]-a|b|c|d-None-[&quot;a|b|c|d&quot;]]</td>
-          <td class="col-duration">0.00</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -1035,7 +1053,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\str_split_to_json_a
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_str_split_to_json_array.py::TestStrSplitToJsonArray::test_simple[String.split(&quot;a|b|c|d&quot;, &quot;|&quot;) -&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]-a|b|c|d-|-[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]]</td>
-          <td class="col-duration">0.02</td>
+          <td class="col-duration">0.00</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
@@ -1044,7 +1062,7 @@ mysql -h192.168.0.150 -P3306 -upytest -ppytest test &lt; ddl\str_split_to_json_a
         <tr>
           <td class="col-result">Passed</td>
           <td class="col-name">tests/test_str_split_to_json_array.py::TestStrSplitToJsonArray::test_simple[String.split(&quot;a, b, c, d&quot;, &quot;, &quot;) -&gt; [&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]-a, b, c, d-, -[&quot;a&quot;, &quot;b&quot;, &quot;c&quot;, &quot;d&quot;]]</td>
-          <td class="col-duration">0.00</td>
+          <td class="col-duration">0.01</td>
           <td class="col-links"></td></tr>
         <tr>
           <td class="extra" colspan="4">
