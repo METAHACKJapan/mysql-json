@@ -12,6 +12,10 @@ This project includes stored functions for MySQL 8.x below:
   - Concatenate 2 arrays into the new array.
 - [ARRAY_UNIQUE(arr JSON)](/docs_en/array_unique.md)
   - Unique and Sort array into the new array.
+- [ARRAY_FLATTEN(arr JSON)](/docs_en/array_flatten.md)
+  - Flatten first child elements of each element on `arr` as JSON array, not recursively.
+- [ARRAY_SORT(arr JSON)](/docs_en/array_sort.md)
+  - Sort in ascending order by elements.
 
 Documents in other languages below:
 
