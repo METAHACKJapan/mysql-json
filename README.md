@@ -16,6 +16,8 @@ This project includes stored functions for MySQL 8.x below:
   - Flatten first child elements of each element on `arr` as JSON array, not recursively.
 - [ARRAY_SORT(arr JSON)](/docs_en/array_sort.md)
   - Sort in ascending order by elements.
+- [ARRAY_REVERSE(arr JSON)](/docs_en/array_reverse.md)
+  - Reverse all elements.
 
 Documents in other languages below:
 
