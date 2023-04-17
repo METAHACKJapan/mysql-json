@@ -12,6 +12,8 @@
   - 2つのJSON配列を連結した新たなJSON配列を得る
 - [ARRAY_UNIQUE(arr JSON)](/docs_ja/array_unique.md)
   - JSON配列の要素から重複を除去したソート済みの新たなJSON配列を得る
+- [ARRAY_FLATTEN(arr JSON)](/docs_ja/array_flatten.md)
+  - JSON配列を要素とするJSON配列から、子要素の第1階層子要素で平坦化したJSON配列を得る
 
 ## インストール方法
 
