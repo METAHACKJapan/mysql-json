@@ -82,3 +82,9 @@ SELECT
     ...
   FROM ...
 ```
+
+### Installation TIP
+
+Actually, each tests for each function includes loading DDL process.
+So trying to run tests, you can install these stored functions into the target MySQL instance.
+Test is written by Python 3.x(probably 3.9 or above). [See detail](/tests/README.md).
