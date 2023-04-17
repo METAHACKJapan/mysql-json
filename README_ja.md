@@ -14,6 +14,8 @@
   - JSON配列の要素から重複を除去したソート済みの新たなJSON配列を得る
 - [ARRAY_FLATTEN(arr JSON)](/docs_ja/array_flatten.md)
   - JSON配列を要素とするJSON配列から、子要素の第1階層子要素で平坦化したJSON配列を得る
+- [ARRAY_SORT(arr JSON)](/docs_ja/array_sort.md)
+  - 子要素を昇順で並び替えたJSON配列を得る
 
 ## インストール方法
 
